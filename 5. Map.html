@@ -1,0 +1,76 @@
+<html></html>
+<script>const log = console.log</script>
+
+<script>
+  const products = [
+      {name: '반팔티', price: 15000},
+      {name: '긴팔티', price: 20000},
+      {name: '핸드폰케이스', price: 15000},
+      {name: '후드티', price: 30000},
+      {name: '바지', price: 25000},
+  ]
+</script>
+
+# map
+
+<script>
+  const map = (f, iter) => {
+      let res = [];
+      for (const a of iter) {
+          res.push(f(a)); // f라는 함수에게 위임해서 처리
+      }
+      return res;
+  }
+
+
+  log(map(p => p.name, products))
+
+  let names = []
+  for (const p of products) {
+      names.push(p.name)
+  }
+  log(names)
+
+  let prices = [];
+  for (const p of products) {
+      prices.push(p.price);
+  }
+  log(prices)
+
+  log(map(p => p.price, products))
+</script>
+
+# 이터러블 프로토콜을 따른 map의 다형성
+
+<script>
+    log(document.querySelectorAll('*'));
+
+    // document.querySelectorAll('*').map() // 동작하지 않음 (ProtoType에 정의되지 않았으므로
+
+    log(map(el => el.nodeName, document.querySelectorAll('*'))) // 이렇게는 동작한다.
+
+    // let it = document.querySelectorAll('*')[Symbol.iterator](); // iterator protocol은 따르고 있다.
+    // log(it.next())
+    // log(it.next())
+    // log(it.next())
+    // log(it.next())
+    // log(it.next())
+    // log(it.next())
+    // log(it.next())
+
+    function* gen() {
+        yield 2;
+        yield 3;
+        yield 4;
+    }
+
+    log(map(a => a * a, gen()))
+
+    let m = new Map()
+    m.set('a', 10)
+    m.set('b', 20)
+    const it = m[Symbol.iterator]()
+
+    log(new Map(map(([k, a]) => [k, a * 2], m)))
+
+</script>
