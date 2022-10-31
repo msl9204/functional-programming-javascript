@@ -26,18 +26,18 @@
   const base_total_price = predicate => pipe(
       filter(predicate),
       total_price,
-  )
+  );
 
   go(
       products,
       base_total_price(p => p.price < 20000),
       log
-  )
+  );
 
   go(
       products,
       base_total_price(p => p.price >= 20000),
       log
-  )
+  );
 
 </script>
